@@ -1,0 +1,30 @@
+<students>
+    <student>
+        <studentId>1001</studentId>
+        <studentName>Tony Tester</studentName>
+        <studentAddress>Bengalore</studentAddress>
+        <studentPhone>9912094565</studentPhone>
+        <marks>90</marks>
+    </student>
+    <student>
+        <studentId>1002</studentId>
+        <studentName>Steve</studentName>
+        <studentAddress>Thrisur</studentAddress>
+        <studentPhone>9176346621</studentPhone>
+        <marks>94</marks>
+    </student>
+    <student>
+        <studentId>1003</studentId>
+        <studentName>Jonh Miller</studentName>
+        <studentAddress>Mumbai</studentAddress>
+        <studentPhone>8743901471</studentPhone>
+        <marks>90</marks>
+    </student>
+    <student>
+        <studentId>1004</studentId>
+        <studentName>Tony Stark</studentName>
+        <studentAddress>Delhi</studentAddress>
+        <studentPhone>9988775533</studentPhone>
+        <marks>90</marks>
+    </student>
+</students>
