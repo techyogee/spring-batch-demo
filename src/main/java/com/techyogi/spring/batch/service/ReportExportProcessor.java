@@ -34,24 +34,29 @@ public class ReportExportProcessor {
 
         JAXBContext jaxbContext = JAXBContext.newInstance(StudentReport.class);
         StudentReport studentReport = null;
-        File [] files = new File(studentXmlPath).listFiles();
-        for (File file : Objects.requireNonNull(files)) {
+        File stdXmlPath = new File(studentXmlPath);
+        File [] files = stdXmlPath.listFiles();
+        File jrFile = new File(studentJrXmlPath);
+        
+        for (File file : files) {
+            logger.info("Processing student report >>>>>>>> {}", file.getName());
             if (file.isFile()) {
+
                 studentReport = (StudentReport) jaxbContext.createUnmarshaller().unmarshal(file);
+                List<Student> students = studentReport.getStudent();
+                JasperReport jasperReport = JasperCompileManager.compileReport(jrFile.getAbsolutePath());
+
+                JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(students);
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("createdBy", "Techyogi");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+                JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath + file.getName().replace(".xml", ".pdf"));
+
+                logger.info("Student report generated successfully in path: [{}]", pdfPath);
+            }else {
+                logger.info("File Not Found In Path: [{}]", studentXmlPath);
             }
         }
-        File file = new File(studentJrXmlPath);
-        List<Student> students = studentReport.getStudent();
-
-        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(students);
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("createdBy", "Techyogi");
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-        JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath);
-
-        logger.info("Student report generated successfully in path: [{}]", pdfPath);
     }
 
 }
